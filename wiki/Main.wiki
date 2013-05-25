@@ -1,0 +1,9 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+*The Factory Tour*
+  * A very simple factory
+  * Factory Method
+  * Abstract Factory
+
+We are going to look at several different types of factories, including a very simple factory that does not necessarily conform to the patterns that were laid out by the original gang of four book. We take a look at the factory method this is the more formal expression of the software factory. And finally the abstract factory pattern.
