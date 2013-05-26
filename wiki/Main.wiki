@@ -20,3 +20,38 @@ How do factories help us, we get the most benefit out out of factories when we f
 Factories are also applicable when we want to separate the instantiation of an object, the creation of it from its representation. For example we may have setters and have to call a bunch of set methods on an entity where we don't have access to the property setters and we may want to wrap that up inside of a factory.
 
 And finally any time we have a lot of if/else blocks, or select switch statements in our code, we might want to take a look at whether or not there is an opportunity for refactoring here that might lead us toward a factory. If what we are doing is simple returning an object based on some select parameter, odds are were good that we would get benefit from an object factory here.
+
+= Demo: Example =
+
+Here we have a very simple application, command-line executable. And it simply takes a command-line argument specifying a name of a car in this case a class that we would like to instantiate. After we get that car we get that IAuto instance back, this is an interface IAuto, and we get that back from our !GetCar method. We then take our car and turn it on and off. You can see in our !GetCar method we are making the choices of which type of car we want to instantiate and return.
+
+{{{
+class Program
+{
+  static void Main(string[] args)
+  {
+    string carName = args[0];
+
+    IAuto car = GetCar(carName);
+    car.TurnOn();
+    car.TurnOff();
+  }
+
+  static IAuto GetCar(string carName)
+  {
+    switch(carName)
+    {
+      case "bmw":
+        return new BMW335Xi();
+      case "mini":
+        return new MiniCooper();
+      default:
+        return new NullCar();
+    }
+  }
+}
+}}}
+
+Now we have a car that we'd like to add to our list of cars that we have access to. We create a new class "AudiTTS". In order to get this Audi to be available in the command-line, we need to add a new case statement in our switch statement. But in doing so we are violating the open closed principle, which states that our classes should be open for extension but closed for modification and we just modified the case statement to include a new car in our list. The other problem is that each time we add a car we need to modify the switch statement
+
+Now our main application needed to be aware of the different types of the IAuto implementations, but it really should only know the IAuto interface.
